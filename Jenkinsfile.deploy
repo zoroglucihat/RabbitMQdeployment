@@ -1,27 +1,32 @@
 pipeline {
 
-  stages {
-    stage('Run kubectl') {
-      steps {
-        container('helm-pod') {
-          git url: 'git://github.com/wardviaene/kubernetes-course.git', branch: 'master'
-          sh '''
-          HELM_BUCKET=helm-rytcufor
-          PACKAGE=demo-chart
-          export AWS_REGION=eu-west-1
+  environment {
+    registry = "192.168.1.81:5000/justme/myweb"
+    dockerImage = ""
+  }
 
-          cp -r /home/helm/.helm ~
-          helm repo add my-charts s3://${HELM_BUCKET}/charts
-          DEPLOYED=$(helm list |grep -E "^${PACKAGE}" |grep DEPLOYED |wc -l)
-          if [ $DEPLOYED == 0 ] ; then
-            helm install --name ${PACKAGE} my-charts/${PACKAGE}
-          else
-            helm upgrade ${PACKAGE} my-charts/${PACKAGE}
-          fi
-          echo "deployed!"
-          '''
+  agent any
+
+  stages {
+
+    stage('Checkout Source') {
+      steps {
+        git 'https://github.com/zorolos/RabbitMQdeployment.git'
+      }
+    }
+
+
+
+
+
+    stage('Deploy App') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "cluster-operator.yaml", kubeconfigId: "cihatskubeconfig")
         }
       }
     }
+
   }
+
 }
