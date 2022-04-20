@@ -1,18 +1,7 @@
 pipeline {
-  agent {
-    kubernetes {
-      label 'helm-pod'
-      serviceAccount 'jenkins-helm'
-      containerTemplate {
-        name 'helm-pod'
-        image 'wardviaene/helm-s3'
-        ttyEnabled true
-        command 'cat'
-      }
-    }
-  }
+
   stages {
-    stage('Run helm') {
+    stage('Run kubectl') {
       steps {
         container('helm-pod') {
           git url: 'git://github.com/wardviaene/kubernetes-course.git', branch: 'master'
