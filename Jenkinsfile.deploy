@@ -30,7 +30,7 @@ pipeline {
     stage('Deploy rabbitmq-cluster') {
       steps {
         script {
-          kubernetesDeploy(configs: "rabbitmq-cluster.yaml", kubeconfigId: "cihatskubeconfig")
+          kubernetesDeploy(configs: "rabbitmq-cluster.yaml", kubeconfigId: "mykubeconfig")
         }
       }
     }
