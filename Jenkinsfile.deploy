@@ -19,7 +19,7 @@ pipeline {
     stage('Deploy cluster-operator') {
       steps {
         script {
-          kubernetesDeploy(configs: "cluster-operator.yaml", kubeconfigId: "cihatskubeconfig")
+          kubernetesDeploy(configs: "cluster-operator.yaml", kubeconfigId: "mykubeconfig")
         }
       }
     }
