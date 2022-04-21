@@ -16,25 +16,4 @@ pipeline {
 
 
 
-    stage('Deploy cluster-operator') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "cluster-operator.yaml", kubeconfigId: "mykubeconfig")
-        }
-      }
-    }
-
-  }
-
-}
-    stage('Deploy rabbitmq-cluster') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "rabbitmq-cluster.yaml", kubeconfigId: "mykubeconfig")
-        }
-      }
-    }
-
-  }
-
-}
+}}
